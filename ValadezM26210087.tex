@@ -1,0 +1,469 @@
+
+\documentclass[letterpaper,11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=BibTeX}
+%TCIDATA{LastRevised=Sunday, October 04, 2026 08:44:29}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{ComputeDefs=
+%$\alpha =0.5449$
+%$\beta =2.761\times 10^{-6}$
+%$\delta =2.6486\times 10^{-6}$
+%$\gamma =0.8464$
+%}
+
+
+\input{tcilatex}
+\renewcommand{\baselinestretch}{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+\pretolerance=2000 \tolerance=3000
+\renewcommand{\abstractname}{Resumen}
+
+\begin{document}
+
+\title{Pr\'{a}ctica 1: Sistema de Lotka Volterra}
+\author{Valadez Madera Nestor Roman $M26210087$ \\
+%EndAName
+Departamento de Ingenier\'{\i}a El\'{e}ctrica y Electr\'{o}nica\\
+Tecnol\'{o}gico Nacional de M\'{e}xico / Instituto Tecnol\'{o}gico de Tijuana%
+}
+\maketitle
+
+\noindent \textbf{Palabras clave: }Modelo Matematico; Ecuaciones
+diferenciales; Simulaciones numericas; Lotka-Volterra; MATLAB.
+
+\bigskip
+
+\noindent Correo: \textbf{m26210087@tectijuana.edu.mx}
+
+\noindent \noindent Carrera: \textbf{Maestr\'{\i}a en\ Ciencias de la
+Ingenier\'{\i}a.}
+
+\noindent Asignatura: \textbf{Modelado Matem\'{a}tico}
+
+\noindent Profesor: \href{https://biomath.xyz/}{\textbf{Dr. Paul Antonio
+Valle Trujillo}} (paul.vt@tijuana.tecnm.mx)
+
+\bigskip
+
+\section{Modelo matematico de Lotka-Volterra}
+
+El sistema presa-depredador de Lotka-Volterra se formula mediante las
+siguientes dos Ecuaciones Diferenciales Ordinarias no Lineales y de primer
+orden:%
+\begin{eqnarray*}
+\dot{x} &=&\alpha x-\beta xy, \\
+\dot{y} &=&\delta xy-\gamma y,
+\end{eqnarray*}
+
+donde los parametros $\alpha ,\beta ,\gamma ,\delta >0$ y las condiciones
+iniciales $x(0),y(0)>0$. La variable de estado $x(t)$ representa a las
+presas, es decir, a las liebres, mientras que la variable de estado $y(t)$
+representa a los depredadores, es decir, los linces.
+
+\bigskip
+
+\section{Analisis de positividad}
+
+Siguiendo el criterio general para la positividad en las soluciones de un
+sistema dinamico no lineal de P. De Leenheer y D. Aeyels (2001) [Seccion 2.6
+del syllabus de la asignatura], se establece el siguiente resultado:
+
+\bigskip
+
+\subsection{Positividad e invariancia del cuadrante no negativo.}
+
+\textit{Sea }$\varphi (t)=(x(t),y(t))^{T}$\textit{\ una soluci\'{o}n del
+sistema Lotka-Volterra con condiciones iniciales no negativas }$\varphi
+(t_{0})\in 
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}$\textit{. Entonces, el cuadrante no negativo definido por }
+
+\begin{equation*}
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}=\{\varphi \in 
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}:x,y\geq 0\}
+\end{equation*}
+
+\textit{es positivamente invariante. Por lo tanto }$\varphi \in 
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}$\textit{\ para toda }$t\geq t_{0}$\textit{.}
+
+\bigskip
+
+\textbf{Prueba}: Al sustituir los valores de la frontera del dominio $%
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}$, se tiene lo siguiente:
+
+\begin{eqnarray*}
+\left. \dot{x}\right\vert _{x=0} &=&\alpha (0)-\beta (0)y=0, \\
+\left. \dot{y}\right\vert _{y=0} &=&\delta x(0)-\gamma (0)=0,
+\end{eqnarray*}
+
+Por lo tanto, para cada punto de la frontera evaluado en el campo vectorial
+de cada ecuacion, el resultado es un valor no negativo.
+
+\bigskip
+
+\section{Puntos de Equilibrio}
+
+Para calcular los puntos de equilibrio [Seccion 3.2 del syllabus de la
+asignatura] es necesario igualar el campo vectorial del sistema de EDOs a
+cero y resolverlo para cada variable de estado, es decir,\newline
+\begin{eqnarray*}
+\alpha x-\beta xy &=&0, \\
+\delta xy-\gamma y &=&0,
+\end{eqnarray*}
+
+por lo tanto, al realizar el procedimiento algebraico correspondiente,
+
+\begin{eqnarray*}
+x(\alpha -\beta y) &=&0, \\
+x &=&0, \\
+y &=&\frac{\alpha }{\beta },
+\end{eqnarray*}
+
+al sustituir en la ecuacion de $\dot{y}$
+
+\begin{eqnarray*}
+y(\delta x-\gamma ) &=&0, \\
+y &=&0, \\
+x &=&\frac{\gamma }{\delta },
+\end{eqnarray*}
+
+con base en lo anterior se concluye el siguiente resultado.
+
+\bigskip
+
+\subsection{Resultado: Puntos de equilibrio}
+
+\bigskip El sistema de Lotka-Volterra tiene los siguientes dos puntos de
+equilibrio localizados durante el curadrante no negativo $%
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}$,
+
+\begin{eqnarray*}
+(x_{0}^{\ast },y_{0}^{\ast }) &=&(0,0), \\
+(x_{1}^{\ast },y_{1}^{\ast }) &=&(\frac{\alpha }{\beta },\frac{\gamma }{%
+\delta }),
+\end{eqnarray*}
+
+\bigskip
+
+\section{Estabilidad asintotica local}
+
+El analisis de estabilidad asintotica local de un sistema dinamico no lineal
+se realiza aplicando el metodo indirecto de Lyapunov [Secciones 5.1 y 5.2.3
+del syllabus de la asignatura], por lo que es necesario calcular la matriz
+Jacobiana [Seccion 2.7 del syllabus de la asignatura] para linealizar el
+sistema no lineal, entonces,
+
+\begin{equation*}
+\frac{\partial \varphi (t)}{\partial \varphi (x,y)}=\left[ 
+\begin{array}{cc}
+\frac{\partial \dot{x}}{\partial x} & \frac{\partial \dot{x}}{\partial y} \\ 
+\frac{\partial \dot{y}}{\partial x} & \frac{\partial \dot{y}}{\partial y}%
+\end{array}%
+\right] =\left[ 
+\begin{array}{cc}
+\alpha -\beta y & -\beta x \\ 
+\delta y & \delta x-\gamma%
+\end{array}%
+\right]
+\end{equation*}
+
+Para evaluar la estabilidad de cada punto de equilibrio, se evalua $J$ en
+cada uno de ellos y se calculan los valores propios de la matriz resultante.
+Por lo tanto, al evaluar $(x_{0}^{\ast },y_{0}^{\ast })$ que representa el
+orginen, se obtiene el siguiente resultado:
+
+\begin{equation*}
+\left. J\right\vert _{(x_{0}^{\ast },y_{0}^{\ast })}=\left[ 
+\begin{array}{cc}
+\alpha & 0 \\ 
+0 & -\gamma%
+\end{array}%
+\right] ,
+\end{equation*}
+
+Los valores propios de una matriz diagonal son cada uno de los elementos de
+su diagonal, es decir,
+
+\begin{eqnarray*}
+\lambda _{1} &=&\alpha , \\
+\lambda _{2} &=&-\gamma ,
+\end{eqnarray*}
+
+\bigskip
+
+Ahora, al evaluar el punto de equilibrio $(x_{1}^{\ast },y_{1}^{\ast })=(%
+\frac{\alpha }{\beta },\frac{\gamma }{\delta })$ en $J$, se tiene lo
+siguiente:
+
+\begin{equation*}
+\left. J\right\vert _{(x_{1}^{\ast },y_{1}^{\ast })}=\left[ 
+\begin{array}{cc}
+0 & -\frac{\beta \gamma }{\delta } \\ 
+\frac{\alpha \delta }{\beta } & 0%
+\end{array}%
+\right] ,
+\end{equation*}
+
+\subsubsection{\textbf{Tarea:} Que se concluye con respecto \ a la
+estabilidad del punto de equilibrio $(x_{0}^{\ast },y_{0}^{\ast })$?}
+
+\bigskip Utilizando los valores para $\alpha ,\beta ,\gamma ,\delta $
+obtenidos en MATLAB, se resuelve el punto de equilibrio $(x_{0}^{\ast
+},y_{0}^{\ast })$ de la siguiente manera:
+
+$\alpha =0.5449$
+
+$\beta =2.761\times 10^{-6}$
+
+$\delta =2.6486\times 10^{-6}$
+
+$\gamma =0.8464$
+
+Solution is: $0.544\,9,-0.846\,4\allowbreak $%
+\begin{eqnarray*}
+\det (%
+\begin{array}{cc}
+\alpha & 0 \\ 
+0 & -\gamma%
+\end{array}%
+-%
+\begin{array}{cc}
+\lambda & 0 \\ 
+0 & \lambda%
+\end{array}%
+) &=&0 \\
+\allowbreak \lambda _{1} &=&\alpha \\
+\lambda _{2} &=&-\gamma
+\end{eqnarray*}
+
+El metodo indirecto de Lyapunnov expresa que: \textit{El origen de }$\dot{x}$%
+\textit{\ es localmente asintoticamente inestable si }$\func{Re}\lambda
+_{i}>0$\textit{\ \ para uno o m\'{a}s valores propios de }$J$\textit{.} Uno
+de los valores propios es $\lambda _{1}=-\alpha $, concluyendo que el punto
+de equilibrio $(x_{0}^{\ast },y_{0}^{\ast })$ es inestable.
+
+\subsubsection{\textbf{Tarea}: Cuales son los valores propios de la matriz
+Jacobiana resultante al evaluar el punto de equilibrio $(x_{1}^{\ast
+},y_{1}^{\ast })$?}
+
+\begin{eqnarray*}
+\det (%
+\begin{array}{cc}
+0 & -\frac{\beta \gamma }{\delta } \\ 
+\frac{\alpha \delta }{\beta } & 0%
+\end{array}%
+-%
+\begin{array}{cc}
+\lambda & 0 \\ 
+0 & \lambda%
+\end{array}%
+) &=&\allowbreak \lambda ^{2}+0.461\,2 \\
+\lambda _{1} &=&-0.679\,12i \\
+\lambda _{2} &=&0.679\,12i
+\end{eqnarray*}
+
+\subsubsection{Tarea: Que se concluye con respecto \ a la estabilidad del
+punto de equilibrio $(x_{1}^{\ast },y_{1}^{\ast })$?}
+
+\textit{El teorema del m\'{e}todo indirecto de Lyapunov no considera los
+casos en que }$\func{Re}\lambda _{i}\leq 0$\textit{\ o }$\func{Re}\lambda
+_{i}=0$\textit{, en estos el teorema no se puede aplicar para concluir sobre
+la estabilidad local del punto de equilibrio de }$\dot{x}=f(x)$\textit{.}
+Sin embargo, es posible realizar conclusiones sobre la estabilidad y no
+sobre la geometr\'{\i}a detallada de las trayectorias. Acorde al syllabus,
+los casos en los que $\func{Re}\lambda _{i}=0$ son considerados\textit{\
+Casos Marginales }y en este caso se les conoce como \textit{centros}. Es
+decir, la trayectoria al rededor del equilibrio presentara oscilaciones
+sostenidas.
+
+\bigskip 
+
+\section{Normalizaci\'{o}n (escalamiento) del sistema}
+
+El sistema din\'{a}mico de Lotka-Volterra
+
+\begin{eqnarray*}
+\dot{x} &=&\alpha x-\beta xy, \\
+\dot{y} &=&\delta xy-\gamma y,
+\end{eqnarray*}%
+\newline
+se normaliza de la siguiente forma, se realiza el cambio de variable:\newline
+
+\begin{equation*}
+x=\frac{x_{n}}{x_{\max }}\text{ y }y=\frac{y_{n}}{y_{\max }},
+\end{equation*}
+
+por lo tanto
+
+\begin{equation*}
+\frac{dx}{dt}=\frac{1}{x_{\max }}\frac{dx_{n}}{dt}\text{ y }\frac{dy}{dt}=%
+\frac{1}{y_{\max }}\frac{dy_{n}}{dt},
+\end{equation*}
+
+al sustituir
+
+\begin{eqnarray*}
+\frac{1}{x_{\max }}\frac{dx_{n}}{dt} &=&\alpha \frac{x_{n}}{x_{\max }}-\beta 
+\frac{x_{n}}{x_{\max }}\frac{y_{n}}{y_{\max }}=\alpha x_{n}-\frac{\beta }{%
+y_{\max }}x_{n}y_{n}, \\
+\frac{1}{y_{\max }}\frac{dy_{n}}{dt} &=&\delta \frac{x_{n}}{x_{\max }}\frac{%
+y_{n}}{y_{\max }}-\gamma \frac{y_{n}}{y_{\max }}=\frac{\delta }{x_{\max }}%
+x_{n}y_{n}-\gamma y_{n},
+\end{eqnarray*}
+
+finalmente:
+
+\begin{equation*}
+\beta _{n}=\frac{\beta }{y_{\max }}\text{ y }\delta _{n}=\frac{\delta }{%
+x_{\max }},
+\end{equation*}
+
+El parametro original se obtiene al realizar
+
+\begin{eqnarray*}
+\beta  &=&\beta _{n}y_{\max }, \\
+\delta  &=&\delta _{n}x_{\max },
+\end{eqnarray*}
+
+\section{Discusion de resultados y simulaciones}
+
+Durante la pr\'{a}ctica se busca aplicar el sistema de Lotka-Volterra para
+analizar sus caracteristicas como modelo matematico.
+
+En esta se realizaron simulaciones numericas en MATLAB, Simulink y se
+realizo el an\'{a}lisis matem\'{a}atico en Scientific Workplace.
+
+\bigskip
+
+\subsubsection{Scientific Workplace}
+
+Para el analisis matem\'{a}tico se llegaron a las siguientes conclusiones:
+
+1.- El sistema permanecera en $%
+%TCIMACRO{\U{211d} }%
+%BeginExpansion
+\mathbb{R}
+%EndExpansion
+_{+,0}^{2}$ para toda $\{x,y\}\geq 0$.
+
+2.- El sistema cuenta con dos puntos de equilibrio $\{x_{e0},y_{e0}\}=\{0,0\}
+$ y $\{x_{e1},y_{e1}\}=\{\alpha ,-\gamma \}$ calculados por medio de la
+linealizaci\'{o}n de la forma $\dot{x}=Ax$.
+
+\bigskip
+
+De los puntos de equlibrio se puede concluir lo siguiente:
+
+2.1.- El metodo indirecto de Lyapunnov expresa que: \textit{El origen de }$%
+\dot{x}$\textit{\ es localmente asintoticamente inestable si }$\func{Re}%
+\lambda _{i}>0$\textit{\ \ para uno o m\'{a}s valores propios de }$J$\textit{%
+.} Uno de los valores propios es $\lambda _{1}=\alpha $, concluyendo que el
+punto de equilibrio $(x_{0}^{\ast },y_{0}^{\ast })$ es inestable. Esta din%
+\'{a}mica se comporta como un repulsor.
+
+2.2.- \textit{El teorema del m\'{e}todo indirecto de Lyapunov no considera
+los casos en que }$\func{Re}\lambda _{i}\leq 0$\textit{\ o }$\func{Re}%
+\lambda _{i}=0$\textit{, en estos el teorema no se puede aplicar para
+concluir sobre la estabilidad local del punto de equilibrio de }$\dot{x}%
+=f(x) $\textit{.} No es posible realizar conclusiones sobre la estabilidad
+pero s\'{\i} sobre la geometr\'{\i}a detallada de las trayectorias. Acorde
+al syllabus, los casos en los que $\func{Re}\lambda _{i}=0$ son considerados%
+\textit{\ Casos Marginales }y en este caso se les conoce como \textit{centros%
+}. Es decir, la trayectoria al rededor del equilibrio presentara
+oscilaciones sostenidas.
+
+\bigskip
+
+\subsubsection{MATLAB y Simulink}
+
+En MATLAB se realizo la aproximaci\'{o}n de los parametros $\alpha $,$\beta $%
+,$\gamma $ y $\delta $ para los datos crudos y la simulaci\'{o}m de la ecuaci%
+\'{o}n cuando se normalizan y/o suavizan los datos. Adiconalmente se
+realizaron simulaciones numericas sobre los parametros obtenidos utilizando
+los datos crudos las cuales utilizar diferentes odes desde la herramienta de
+Simulink.
+
+La primera funci\'{o}n realizada para la obtenci\'{o}n de parametros fue la
+funci\'{o}n mdl, la cual requiere unos parametros preliminares para la
+ooptimizaci\'{o}n de estos, la otra funci\'{o}n es la funcion LotkaVolterra
+que utiliza los parametros obtenidos para el modelado directo de la ecuaci%
+\'{o}n, ambas funciones utilizan el m\'{e}todo de Euler-Heun para realizar
+la aproximaci\'{o}n matem\'{a}tica de la funci\'{o}n. Las funciones plotsys,
+plotfittign y plotphase se utilizar\'{o}n para gr\'{a}ficar las funciones
+obtenidas en diferentes puntos de la pr\'{a}ctica.
+
+Para el computo de la soluci\'{o}n se utilizaron odes para funciones stiff
+(ode45, ode23, ode113), odes con paso de integraci\'{o}n fijo (ode1, ode2,
+ode3, ode4 y ode5) y funciones anonimas (ode78, ode89). Las funciones con
+paso de integraci\'{o}n fijo ten\'{\i}an una menor cantidad de oscilaciones
+en general que las funciones anonimas y las odes para funciones stiff.
+
+\bigskip
+
+En la graficaci\'{o}n de la estabilidad de los puntos de equilibrio podemos
+encontrar varios casos:
+
+1.- Caso en la vecindad del punto $(x_{0}^{\ast },y_{0}^{\ast })$ y alejado
+de $(x_{1}^{\ast },y_{1}^{\ast })$: En este caso una forma de elipsoide
+bastanre deformada, si bien el punto $(x_{0}^{\ast },y_{0}^{\ast })$ \ es un
+punto de inestabilidad, los valores de la condicion inicial utilizada se
+encuentran entre $(x_{0}^{\ast },y_{0}^{\ast })$ y $(x_{1}^{\ast
+},y_{1}^{\ast })$ causando que la funcion fase tenga la forma de un
+elipsoide bastante deformado al grado de parecer un tri\'{a}ngulo rectangulo.
+
+2.- Caso en la vecindad del punto $(x_{1}^{\ast },y_{1}^{\ast })$ y no tan
+alejado de $(x_{0}^{\ast },y_{0}^{\ast })$. En este caso, las condiciones
+iniciales se encutran cerca del punto de equilibrio $(x_{1}^{\ast
+},y_{1}^{\ast })$ por un factor de ($\pm 50\%$ $(x_{1}^{\ast },y_{1}^{\ast })
+$), y mientras mas se disminuya este factor la forma del centroide se
+volvera cada vez mas pronunciada, en este segundo caso por ejemplo, la forma
+de la funci\'{o}n fase pasa a tener una forma similar a la de un huevo.
+
+3.- Caso en la vecindad del punto $(x_{1}^{\ast },y_{1}^{\ast })$ y alejado
+de $(x_{0}^{\ast },y_{0}^{\ast })$. En este caso, las condiciones iniciales
+se encuentran cerca del punto de equilibrio ($\pm 5\%$ $(x_{1}^{\ast
+},y_{1}^{\ast })$) la funci\'{o}n pasa a ser un ovalo con de un radio
+reducido alrededor del punto de equilibrio.
+
+4.- Caso alejado de $(x_{0}^{\ast },y_{0}^{\ast })$ y de $(x_{1}^{\ast
+},y_{1}^{\ast })$: En este caso, la funcion fase nuevamente vuelve a
+deformase mientras mas se aleja del equilibrio $(x_{1}^{\ast },y_{1}^{\ast
+}) $, por ejemplo para un factor de incremento de $200\%$ $(x_{1}^{\ast
+},y_{1}^{\ast })$ la forma de la funci\'{o}n fase vuelve a parecer la de un
+triangulo rectangulo y continua deformandose al alejarse m\'{a}.
+
+\end{document}
